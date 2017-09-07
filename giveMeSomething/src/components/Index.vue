@@ -1,10 +1,17 @@
 <template>
+ <div class="container">
+  <div class="nav">
+    <div class="header">GiveMeSomething</div>
+    <div class="about">About</div>
+  </div>
 
   <div class='main-page'
       v-if="!results.length && !fetched">
     <div class="tab">
-    <button v-on:click="iwant=true;ifeel=false;message=''">I WANT</button>
-    <button  v-on:click="iwant=false; ifeel=true;message=''">I FEEL</button>
+    <button class="iwant"
+            v-on:click="iwant=true;ifeel=false;message=''">I WANT</button>
+    <button class="ifeel"
+            v-on:click="iwant=false; ifeel=true;message=''">I FEEL</button>
   </div>
 
     <div class="iWant" v-show="iwant">
@@ -46,7 +53,8 @@
    <div v-else-if="!results.length && fetched">
      <div class="not-found">Don't know what exactly you want...but still here are some choices you might like.</div>
    </div>
-</div>
+ </div>
+</div> 
 
 </template>
 
@@ -125,21 +133,68 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
+  * {
+    color: #fff;
+  }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  button {
+    color: #2c3e50;
+    background:none;
+    border:none;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  .container {
+    width: 100%;
+    height: 100%;
+    background: url("../assets/bg.jpg") no-repeat center center;
+        background-size: cover;
+  }
 
-a {
-  color: #42b983;
-}
+  .nav {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin: auto;
+    width: 100%;
+    height: 5%;
+    background-color: #ce1e1e;
+  }
+
+  .nav .header {
+    position: absolute;
+    top: 15%;
+    left: 5%;
+    margin: auto;
+
+  }
+
+  .nav .about {
+    position: absolute;
+    top: 15%;
+    right: 5%;
+    margin: auto;
+  }
+
+  .main-page, .result-page {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80%;
+    height: 30%;
+  }
+
+  .iwant {
+    background: #fff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+
+  .iwant:active, .ifeel:active {
+    background: #fff;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
 </style>
