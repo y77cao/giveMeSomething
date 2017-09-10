@@ -9,28 +9,30 @@
       v-if="!results.length && !fetched">
     <div class="tab">
     <button class="iwant"
-            v-on:click="iwant=true;ifeel=false;message=''">I WANT</button>
+            ref="tab1"
+            v-on:click="iwant=true;ifeel=false;message='';changeTab1StyleOnClick()">I WANT</button>
     <button class="ifeel"
-            v-on:click="iwant=false; ifeel=true;message=''">I FEEL</button>
+            ref="tab2"
+            v-on:click="iwant=false; ifeel=true;message='';changeTab2StyleOnClick()">I FEEL</button>
   </div>
 
     <div class="iWant" v-show="iwant">
-      <div> Give me something <input v-model="message">.</div>
+      <div class="syntax"> Give me something <input v-model="message">.</div>
       
-      <div class="giveHints" v-for="hint in hints1">
+      <div class="hints" v-for="hint in hints1">
         <div v-on:click="copyHint(hint)">{{hint}}</div>
       </div>
    </div>
 
    <div class="iFeel" v-show="ifeel">
-     <div> I feel <input v-model="message"> today.</div>
+     <div class="syntax"> I feel <input v-model="message"> today.</div>
    
      <div class='hints' v-for="hint in hints2">
        <div v-on:click="copyHint(hint)">{{hint}}</div>
      </div>
    </div>
 
-   <button v-on:click="getMovies()">Find movies</button>
+   <button v-on:click="getMovies()" class="find-movies">Find movies!</button>
 </div>
 
 <div class="result-page"
@@ -72,7 +74,10 @@ export default {
       'interesting',
       'boring',
       'cool',
-      'depressing'
+      'depressing',
+      'scary',
+      'healing',
+      'unreal'
       ],
       hints2: [
       'happy',
@@ -125,6 +130,16 @@ export default {
         this.results = json.results;
         this.fetched = true;
       })
+    },
+
+    changeTab1StyleOnClick() {
+      this.style.backgroundColor = "#fff";
+      this.$refs.tab2.backgroundColor="transparent";
+    },
+
+    changeTab2StyleOnClick() {
+      this.style.backgroundColor = "#fff";
+      this.$refs.tab1.backgroundColor="transparent";
     }
 
   }
@@ -135,6 +150,7 @@ export default {
 <style scoped>
   * {
     color: #fff;
+    font-family: 'Ubuntu Mono', cursive;
   }
 
   button {
@@ -143,11 +159,35 @@ export default {
     border:none;
   }
 
+  input {
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 1px solid #fff;
+    width: 25%;
+    font-family: 'Rock Salt';
+    font-size: 2rem;
+  }
+
+  @font-face {
+  font-family: 'Rock Salt';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Rock Salt Regular'), local('RockSalt-Regular'), url(https://fonts.gstatic.com/s/rocksalt/v7/Q94aHXFHGip10K5uxi1jOJBw1xU1rKptJj_0jans920.woff2) format('woff2');
+  }
+
+  @font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(https://fonts.gstatic.com/s/ubuntumono/v6/ViZhet7Ak-LRXZMXzuAfkYgp9Q8gbYrhqGlRav_IXfk.woff2) format('woff2');
+  }
+
   .container {
     width: 100%;
     height: 100%;
     background: url("../assets/bg.jpg") no-repeat center center;
-        background-size: cover;
+    background-size: cover;
   }
 
   .nav {
@@ -182,19 +222,52 @@ export default {
     left: 0;
     right: 0;
     margin: auto;
+    margin-top: 0;
+    top: 20%;
     width: 80%;
     height: 30%;
   }
 
-  .iwant {
-    background: #fff;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+  .tab {
+    width: 100%;
+    height: 15%;
+    margin-bottom: 5%;
   }
 
-  .iwant:active, .ifeel:active {
-    background: #fff;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
+  .tab * {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    width: 25%;
+    height: 100%;
+    font-size: 1.2rem;
+  }
+
+  .iwant {
+    background-color: #fff;
+    opacity: 0.9;
+  }
+
+  .find-movies {
+    background-color: #ce1e1e;
+    color: #fff;
+    width: 50%;
+    height: 25%;
+    border-radius: 10px;
+    margin: 5%;
+    font-size: 1.2rem;
+  }
+
+  .syntax {
+    font-size: 3rem;
+  }
+
+  .hints {
+    display: inline-block;
+    margin: 1%;
+    border: 1px solid #fff;
+    border-radius: 10px;
+    width: 20%;
+    height: 30%;
+    font-size: 1.2rem;
   }
 </style>
