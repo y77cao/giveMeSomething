@@ -10,10 +10,10 @@
     <div class="tab">
     <button class="iwant"
             ref="tab1"
-            v-on:click="iwant=true;ifeel=false;message='';changeTab1StyleOnClick()">I WANT</button>
+            v-on:click="iwant=true;ifeel=false;message=''">I WANT</button>
     <button class="ifeel"
             ref="tab2"
-            v-on:click="iwant=false; ifeel=true;message='';changeTab2StyleOnClick()">I FEEL</button>
+            v-on:click="iwant=false; ifeel=true;message=''">I FEEL</button>
   </div>
 
     <div class="iWant" v-show="iwant">
@@ -38,7 +38,8 @@
 <div class="result-page"
      v-else>
   <div v-on:click="fetched=false;results=[]">Search Again</div>
-  <div v-if="results.length > 0 && fetched">
+  <div class="success-result"
+       v-if="results.length > 0 && fetched">
     <div class="movie-list"
          v-for="res in results">
        <img v-bind:src="getImgSrc(res.poster_path)"/>
@@ -52,7 +53,8 @@
            v-on:click="getNextPage()">next</button>
   </div>
 
-   <div v-else-if="!results.length && fetched">
+   <div class="not-found-result"
+        v-else-if="!results.length && fetched">
      <div class="not-found">Don't know what exactly you want...but still here are some choices you might like.</div>
    </div>
  </div>
@@ -131,17 +133,6 @@ export default {
         this.fetched = true;
       })
     },
-
-    changeTab1StyleOnClick() {
-      this.style.backgroundColor = "#fff";
-      this.$refs.tab2.backgroundColor="transparent";
-    },
-
-    changeTab2StyleOnClick() {
-      this.style.backgroundColor = "#fff";
-      this.$refs.tab1.backgroundColor="transparent";
-    }
-
   }
 }
 </script>
@@ -267,7 +258,38 @@ export default {
     border: 1px solid #fff;
     border-radius: 10px;
     width: 20%;
-    height: 30%;
+    padding: 1%;
     font-size: 1.2rem;
+  }
+
+  .hints:hover {
+    background-color: #ce1e1e;
+  }
+
+  .result-page {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 10%;
+    left: 0;
+  }
+
+  .success-result {
+    width: 100%;
+    height: 80%;
+    position: absolute;
+    overflow: scroll;
+  }
+
+  .movie-list {
+    display: inline-block;
+    width: 15%;
+    height: 45%;
+    margin: 1%;
+  }
+
+  .movie-list * {
+    display: table;
+    text-align: center;
   }
 </style>
